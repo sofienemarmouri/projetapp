@@ -1,0 +1,23 @@
+version: '3.9'
+
+services: 
+  myadmin:
+    image: phpmyadmin:latest
+    ports:
+      - 9090:80
+    environment: 
+      PMA_HOST: database
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: vincent
+    depends_on: 
+      - database
+  
+  database:
+    image: mysql:latest
+#    ports:
+#      - 3306:3306
+    environment: 
+      MYSQL_ROOT_PASSWORD: vincent
+      MYSQL_DATABASE: ynov
+      MYSQL_USER: bob
+      MYSQL_PASSWORD: boby
