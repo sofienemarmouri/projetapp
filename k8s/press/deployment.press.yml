@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: press-deployment
+  labels:
+    app: press
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: press
+  template:
+    metadata:
+      labels:
+        app: press-pod
+    spec:
+      containers:
+      - name: press-cont
+        image: wordpress:latest
+        ports:
+        - containerPort: 80
