@@ -8,7 +8,7 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      app: press
+      app: press-pod
   template:
     metadata:
       labels:
