@@ -11,7 +11,7 @@ L'objectif est le déploiement, la maintenance et la mise à jour de différents
 
 ## Ce qui est fournis
 
-Pour ce projet, je jouerais le rôle du développeur. Vous pourrez donc me poser des questions sur le fonctionnement des apps, ce qu'elles ont besoin en terme de ressources et de liaisons. Si il le faut, je pourrais modifier le code des applications afin de les adapter à votre système (tant que ça reste de la configuration). Les applications sont disponibles sur le [git](https://github.com/bart120/maj2appscore) du cours.
+Pour ce projet, je jouerais le rôle du développeur. Vous pourrez donc me poser des questions sur le fonctionnement des apps, ce qu'elles ont besoin en terme de ressources et de liaisons. Si il le faut, je pourrais modifier le code des applications afin de les adapter à votre système (tant que ça reste de la configuration). Les applications sont disponibles sur le [git](https://github.com/bart120/maj2/appscore) du cours.
 Description des apps:
 - web => application web qui consomme les services applicants.api et jobs.api
 - applicants.api => service API REST fournissant des données d'une base de données.
