@@ -11,7 +11,15 @@ L'objectif est le déploiement, la maintenance et la mise à jour de différents
 
 ## Ce qui est fournis
 
-Pour ce projet, je jouerais le rôle du développeur. Vous pourrez donc me poser des questions sur le fonctionnement des apps, ce qu'elles ont besoin en terme de ressources et de liaisons. Si il le faut, je pourrais modifier le code des applications afin de les adapter à votre système (tant que ça reste de la configuration). Les applications sont disponibles sur le [git](https://github.com/bart120/maj2) du cours.
+Pour ce projet, je jouerais le rôle du développeur. Vous pourrez donc me poser des questions sur le fonctionnement des apps, ce qu'elles ont besoin en terme de ressources et de liaisons. Si il le faut, je pourrais modifier le code des applications afin de les adapter à votre système (tant que ça reste de la configuration). Les applications sont disponibles sur le [git](https://github.com/bart120/maj2appscore) du cours.
+Description des apps:
+- web => application web qui consomme les services applicants.api et jobs.api
+- applicants.api => service API REST fournissant des données d'une base de données.
+- identity.api => service API REST fournissant une authentification
+- jobs.api => service API REST fournissant des données d'une base de données.
+- sql.data => base données SqlServer et données
+- rabbitmq => fournis une communication entre les services API REST
+Les relations sont décrites dans le fichier docker-compose.
 
 ## Conteneur
 
@@ -35,12 +43,12 @@ Il vous faudra définir des "règles d'affinité" entre vos éléments afin d'en
 ## Bilan de santé
 
 Votre devra être sous surveillance!  Vous devrez réaliser "un bilan de santé" de votre cluster en métant en place les sondes de préparation et les sondes de vivacité.
-De même vous devrez mettre en place les meusures par métrique, les métriques de l'état du cluster, les métriques de ressources des noeuds et des pods ainsi que les métriques de travail du plan de contrôle (Metrics server et kube-state-metrics).
+De même vous devrez mettre en place les mesures par métrique, les métriques de l'état du cluster, les métriques de ressources des noeuds et des pods ainsi que [les métriques de travail du plan de contrôle](https://kubernetes.io/docs/concepts/cluster-administration/system-metrics) (Metrics server et kube-state-metrics).
 
 
 ## Sécurité
 
-Vos apps devront être accessible uniquement par le protocole https de l'exterieur. Il vous faudra donc générer un certificat (auto-signé) SSL, et l'associer à votre cluster.
+Vos apps devront être accessible uniquement par le protocole https de l'exterieur. Il vous faudra donc générer un [certificat](https://kubernetes.io/docs/tasks/tls/managing-tls-in-a-cluster) (auto-signé) SSL, et l'associer à votre cluster.
 
 ## Logs
 
