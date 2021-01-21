@@ -8,7 +8,7 @@ services:
       context: ./web
       dockerfile: Dockerfile.debug
     ports: 
-    - "8080:80"
+    - 8080:80
     volumes: 
       - ./web/bin/pub/:/app
     container_name: web
@@ -25,7 +25,7 @@ services:
       context: ./services/applicants.api
       dockerfile: Dockerfile.debug
     ports: 
-    - "8081:80"
+    - 8081:80
     volumes: 
       - ./services/applicants.api/bin/pub/:/app
     container_name: applicants.api
@@ -41,7 +41,7 @@ services:
       context: ./services/jobs.api
       dockerfile: Dockerfile.debug
     ports: 
-    - "8083:80"
+    - 8083:80
     volumes: 
       - ./services/jobs.api/bin/pub/:/app
     container_name: jobs.api
@@ -57,7 +57,7 @@ services:
       context: ./services/identity.api
       dockerfile: Dockerfile.debug
     ports: 
-    - "8084:80"
+    - 8084:80
     volumes: 
       - ./services/identity.api/bin/pub/:/app
     container_name: identity.api
@@ -70,7 +70,7 @@ services:
       context: ./Database
       dockerfile: Dockerfile
     ports:
-      - "5433:1433"
+      - 5433:1433
     container_name: mssql-linux
 
   user.data:
@@ -79,7 +79,8 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - "15672:15672"
+      - 15672:15672
+      - 5672:5672
     container_name: rabbitmq
   
 
