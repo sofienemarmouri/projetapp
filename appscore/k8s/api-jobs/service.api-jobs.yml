@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-api-jobs
+spec:
+  selector:
+    app: api-jobs-pod
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-identity-deployment
+  labels:
+    app: api-identity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-identity-pod
+  template:
+    metadata:
+      labels:
+        app: api-identity-pod
+    spec:
+      containers:
+      - name: api-identity-cont
+        image: bart120/yv-api-identity:1
+        env:
+        - name: HostRabbitmq
+          value: "service-rabittmq"
+        - name: RedisHost
+          value: "service-user-data:6379"
+        ports:
+        - containerPort: 80

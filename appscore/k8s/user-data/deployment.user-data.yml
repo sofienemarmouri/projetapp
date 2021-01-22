@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-data-deployment
+  labels:
+    app: user-data
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-data-pod
+  template:
+    metadata:
+      labels:
+        app: user-data-pod
+    spec:
+      containers:
+      - name: user-data-cont
+        image: redis
+        ports:
+        - containerPort: 6379

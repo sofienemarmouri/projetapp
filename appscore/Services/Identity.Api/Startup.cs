@@ -54,7 +54,7 @@ namespace Identity.Api
                 {
                     var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
                     {
-                        var host = cfg.Host(new Uri("rabbitmq://127.0.0.1/"), h =>
+                        var host = cfg.Host(new Uri($"rabbitmq://{Configuration["HostRabbitmq"]}/"), h =>
                         {
                             h.Username("guest");
                             h.Password("guest");

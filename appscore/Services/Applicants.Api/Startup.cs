@@ -28,7 +28,8 @@ namespace Applicants.Api
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddScoped<IApplicantRepository>(c => new ApplicantRepository("Server=sql.data;User=sa;Password=Pass@word;Database=dotnetgigs.applicants"));
+            services.AddScoped<IApplicantRepository>(c => new ApplicantRepository(Configuration["ConnectionString"]));
+            //"Server=sql.data;User=sa;Password=Pass@word;Database=dotnetgigs.applicants"
 
             var builder = new ContainerBuilder();
 
@@ -39,7 +40,7 @@ namespace Applicants.Api
                 {
                     var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
                     {
-                        var host = cfg.Host(new Uri("rabbitmq://127.0.0.1/"), h =>
+                        var host = cfg.Host(new Uri($"rabbitmq://{Configuration["HostRabbitmq"]}/"), h =>
                         {
                             h.Username("guest");
                             h.Password("guest");
