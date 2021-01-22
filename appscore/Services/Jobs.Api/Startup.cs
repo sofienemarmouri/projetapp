@@ -35,7 +35,7 @@ namespace Jobs.Api
                 {
                     return Bus.Factory.CreateUsingRabbitMq(sbc =>
                     {
-                        sbc.Host("rabbitmq", "/", h =>
+                        sbc.Host("127.0.0.1", "/", h =>
                         {
                             h.Username("guest");
                             h.Password("guest");

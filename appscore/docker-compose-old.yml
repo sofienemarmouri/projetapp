@@ -5,10 +5,12 @@ services:
   webmvc:
     image: web 
     build:
-      context: ./
-      dockerfile: Web/Dockerfile
+      context: ./web
+      dockerfile: Dockerfile.debug
     ports: 
     - 8080:80
+    volumes: 
+      - ./web/bin/pub/:/app
     container_name: web
     depends_on:
       - applicants.api
@@ -20,10 +22,12 @@ services:
     environment:
       - ConnectionString=Server=sql.data;User=sa;Password=Pass@word;Database=dotnetgigs.applicants;    
     build:
-      context: ./
-      dockerfile: Services/Applicants.Api/Dockerfile
+      context: ./services/applicants.api
+      dockerfile: Dockerfile.debug
     ports: 
     - 8081:80
+    volumes: 
+      - ./services/applicants.api/bin/pub/:/app
     container_name: applicants.api
     depends_on:
       - sql.data
@@ -34,10 +38,12 @@ services:
     environment:
       - ConnectionString=Server=sql.data;User=sa;Password=Pass@word;Database=dotnetgigs.jobs;    
     build:
-      context: ./
-      dockerfile: Services/Jobs.Api/Dockerfile
+      context: ./services/jobs.api
+      dockerfile: Dockerfile.debug
     ports: 
     - 8083:80
+    volumes: 
+      - ./services/jobs.api/bin/pub/:/app
     container_name: jobs.api
     depends_on:
       - sql.data
@@ -48,10 +54,12 @@ services:
     environment:
       - RedisHost=user.data:6379
     build:
-      context: ./
-      dockerfile: Services/Identity.Api/Dockerfile
+      context: ./services/identity.api
+      dockerfile: Dockerfile.debug
     ports: 
     - 8084:80
+    volumes: 
+      - ./services/identity.api/bin/pub/:/app
     container_name: identity.api
     depends_on:
       - user.data       
