@@ -17,7 +17,8 @@ pipeline {
       steps{
           dir ( 'appscore/Web'){
           script {
-           dockerImage = docker.build(registry)
+           sh "pwd;ls -la"
+		  dockerImage = docker.build(registry)
         }
       }}
     }
