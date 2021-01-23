@@ -15,10 +15,10 @@ pipeline {
     
     stage('Building image') {
       steps{
-          dir ( 'appscore/Web'){
+          dir ( 'appscore'){
           script {
            sh "pwd;ls -la"
-		  dockerImage = docker.build(registry)
+		  dockerImage = docker.build(registry,"-f Web/Dockerfile .")
         }
       }}
     }
