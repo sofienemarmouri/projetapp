@@ -1,8 +1,12 @@
 pipeline {
   environment {
-	registry = "sofienemarmouri/projetynov"
+	registryWeb = "sofienemarmouri/projetynov-web"
+	registryApplicants = "sofienemarmouri/projetynov-applicants"
+	registryJob = "sofienemarmouri/projetynov-job"
     registryCredential = 'dockerhub'
-    dockerImage = ''
+    dockerImageWeb = ''
+	dockerImageApi = ''
+	dockerImageJob = ''
   }
   agent any
 
@@ -18,7 +22,9 @@ pipeline {
           dir ( 'appscore'){
           script {
            sh "pwd;ls -la"
-		  dockerImage = docker.build(registry,"-f Web/Dockerfile .")
+		  dockerImageWeb = docker.build(registryWeb,"-f Web/Dockerfile .")
+		  dockerImageApi = docker.build(registryApplicants,"-f Services/Applicants.Api/Dockerfile .")
+		  dockerImageJob = docker.build(registryJob,"-f Services/Jobs.Api/Dockerfile .")
         }
       }}
     }
@@ -26,8 +32,12 @@ pipeline {
       steps{
          script {
             docker.withRegistry( '', registryCredential ) {
-            dockerImage.push("$BUILD_NUMBER")
-            dockerImage.push("latest")
+            dockerImageWeb.push("$BUILD_NUMBER")
+            dockerImageWeb.push("latest")
+	    dockerImageApi.push("$BUILD_NUMBER")
+            dockerImageApi.push("latest")
+	    dockerImageJob.push("$BUILD_NUMBER")
+            dockerImageJob.push("latest")
           }
            echo "trying to push Docker Build to DockerHub"
         }
@@ -36,7 +46,9 @@ pipeline {
 
     stage('Remove Unused docker image') {
       steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
+        sh "docker rmi $registryWeb:$BUILD_NUMBER"
+	sh "docker rmi $registryApi:$BUILD_NUMBER"
+	sh "docker rmi $registryJob:$BUILD_NUMBER"
       }
     }
 }
