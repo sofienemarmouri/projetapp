@@ -2,8 +2,8 @@ pipeline {
   environment {
 	registry = "sofienemarmouri/projetynov"
     registryCredential = 'dockerhub'
+    dockerImage = ''
   }
-    def dockerImage
   agent any
 
   stages {
