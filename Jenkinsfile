@@ -60,8 +60,7 @@ pipeline {
 	sh "docker rmi $registryApplicants:$BUILD_NUMBER"
 	sh "docker rmi $registryJob:$BUILD_NUMBER"
 	sh "docker rmi $registryIdentity:$BUILD_NUMBER"
+	sh "docker rmi $registryRedis:$BUILD_NUMBER"
       }
     }
 }
-  
-} 
