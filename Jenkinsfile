@@ -45,8 +45,8 @@ pipeline {
             dockerImageJob.push("latest")
 	    dockerImageIdentity.push("$BUILD_NUMBER")
             dockerImageIdentity.push("latest")
-	    dockerImageRabbitmq.push("$BUILD_NUMBER")
-            dockerImageRabbitmq.push("latest")
+	    sh "docker tag rabbitmq:latest sofienemarmouri/projetynov-rabbitmq:rabbitmq
+	    sh "docker push sofienemarmouri/projetynov-rabbitmq:rabbitmq
           }
            echo "trying to push Docker Build to DockerHub"
         }
