@@ -4,13 +4,13 @@ pipeline {
 	registryApplicants = "sofienemarmouri/projetynov-applicants"
 	registryJob = "sofienemarmouri/projetynov-job"
 	registryIdentity = "sofienemarmouri/projetynov-identity"
-	registryRedis = "sofienemarmouri/projetynov-redis"
+	registrySql = "sofienemarmouri/projetynov-sql"
     registryCredential = 'dockerhub'
 	dockerImageWeb = ''
 	dockerImageApi = ''
 	dockerImageJob = ''
 	dockerImageIdentity = ''
-	dockerImageRedis = ''
+	dockerImageSql = ''
   }
   agent any
 
@@ -20,6 +20,7 @@ pipeline {
          checkout scm
       }
     }
+    
     stage('Building image') {
       steps{
           dir ( 'appscore'){
@@ -29,10 +30,9 @@ pipeline {
 		  dockerImageApi = docker.build(registryApplicants,"-f Services/Applicants.Api/Dockerfile .")
 		  dockerImageJob = docker.build(registryJob,"-f Services/Jobs.Api/Dockerfile .")
 		  dockerImageIdentity = docker.build(registryIdentity,"-f Services/Identity.Api/Dockerfile .")
-		  dockerImageRedis = docker.image("redis")
-		  dockerImageRedis.pull()
+		  dockerImageSql = docker.build(registrySql,"-f Database/Dockerfile .")
         }
-      }}	    
+      }}
     }
     stage('Publish Image ') {
       steps{
@@ -46,8 +46,8 @@ pipeline {
             dockerImageJob.push("latest")
 	    dockerImageIdentity.push("$BUILD_NUMBER")
             dockerImageIdentity.push("latest")
-	dockerImageRedis.withDockerRegistry([ credentialsId: "dockerhub", url: "https://hub.docker.com/repository/docker/sofienemarmouri/redis" ]) {
-      	   sh 'docker push redis'
+	    dockerImageSql.push("$BUILD_NUMBER")
+            dockerImageSql.push("latest")
           }
            echo "trying to push Docker Build to DockerHub"
         }
@@ -60,10 +60,9 @@ pipeline {
 	sh "docker rmi $registryApplicants:$BUILD_NUMBER"
 	sh "docker rmi $registryJob:$BUILD_NUMBER"
 	sh "docker rmi $registryIdentity:$BUILD_NUMBER"
-	sh "docker rmi $registryRedis:$BUILD_NUMBER"
+	sh "docker rmi $registrySql:$BUILD_NUMBER"
       }
     }
 }
-
-}
-}
+  
+} 
