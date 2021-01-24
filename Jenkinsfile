@@ -4,7 +4,7 @@ pipeline {
 	registryApplicants = "sofienemarmouri/projetynov-applicants"
 	registryJob = "sofienemarmouri/projetynov-job"
 	registryIdentity = "sofienemarmouri/projetynov-identity"
-	registryRabbitmq = "sofienemarmouri/projetynov-userdata"
+	registryRedis = "sofienemarmouri/projetynov-redis"
     registryCredential = 'dockerhub'
 	dockerImageWeb = ''
 	dockerImageApi = ''
