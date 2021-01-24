@@ -31,10 +31,9 @@ pipeline {
 		  dockerImageJob = docker.build(registryJob,"-f Services/Jobs.Api/Dockerfile .")
 		  dockerImageIdentity = docker.build(registryIdentity,"-f Services/Identity.Api/Dockerfile .")	
         }
-      }}
-    }
-    stage("pull image"){      
-	sh "docker pull rabbitmq"
+      }
+      }
+      sh "docker pull rabbitmq"	    
     }
     stage('Publish Image ') {
       steps{
