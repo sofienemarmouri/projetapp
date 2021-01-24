@@ -35,7 +35,7 @@ pipeline {
       }}	    
     }
     stage('Publish Image ') {
-      'steps'{
+      steps{
          script {
             docker.withRegistry( '', registryCredential ) {
             dockerImageWeb.push("$BUILD_NUMBER")
