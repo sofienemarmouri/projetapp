@@ -47,7 +47,7 @@ pipeline {
 	    dockerImageIdentity.push("$BUILD_NUMBER")
             dockerImageIdentity.push("latest")
 	    sh "docker tag redis user.data"
-	    sh "docker push sofienemarmouri/projetynov-redis:user.data
+	    sh "docker push sofienemarmouri/projetynov-redis:1.0
           }
            echo "trying to push Docker Build to DockerHub"
         }
