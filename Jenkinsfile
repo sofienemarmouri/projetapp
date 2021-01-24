@@ -46,10 +46,8 @@ pipeline {
             dockerImageJob.push("latest")
 	    dockerImageIdentity.push("$BUILD_NUMBER")
             dockerImageIdentity.push("latest")
-	    dockerImageRedis.withRegistry('https://hub.docker.com/repository/docker/sofienemarmouri/redis', 'dockerhub') {
-		    app.push("$BUILD_NUMBER")
-		    app.push("latest")
-	    }
+	withDockerRegistry([ credentialsId: "dockerhub", url: "https://hub.docker.com/repository/docker/sofienemarmouri/redis" ]) {
+      	   sh 'docker push redis'
           }
            echo "trying to push Docker Build to DockerHub"
         }
