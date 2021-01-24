@@ -20,7 +20,6 @@ pipeline {
          checkout scm
       }
     }
-    
     stage('Building image') {
       steps{
           dir ( 'appscore'){
