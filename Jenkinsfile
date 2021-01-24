@@ -30,7 +30,7 @@ pipeline {
 		  dockerImageApi = docker.build(registryApplicants,"-f Services/Applicants.Api/Dockerfile .")
 		  dockerImageJob = docker.build(registryJob,"-f Services/Jobs.Api/Dockerfile .")
 		  dockerImageIdentity = docker.build(registryIdentity,"-f Services/Identity.Api/Dockerfile .")
-		  dockerImageSql = docker.build(registrySql,"-f Database/Sql.Data/Dockerfile .")
+		  dockerImageSql = docker.build(registrySql,"-f Sql.Data/Dockerfile .")
         }
       }}
     }
