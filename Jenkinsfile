@@ -46,8 +46,6 @@ pipeline {
             dockerImageJob.push("latest")
 	    dockerImageIdentity.push("$BUILD_NUMBER")
             dockerImageIdentity.push("latest")
-   	    withDockerRegistry([ credentialsId: "sofienemarmouri", url: "https://hub.docker.com/repository/docker/sofienemarmouri/redis" ]) {
-      	       sh "docker push redis"
           }
            echo "trying to push Docker Build to DockerHub"
         }
@@ -64,5 +62,5 @@ pipeline {
       }
     }
 }
-}
+
 }
