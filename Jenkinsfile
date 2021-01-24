@@ -23,6 +23,13 @@ pipeline {
       steps{
           dir ( 'appscore'){
           script {
+	   sh "docker pull redis"
+	   sh "docker pull rabbitmq"
+	   sh "docker tag redis user.data"
+	   sh "docker tag rabbitmq:latest sofienemarmouri/projet-ynovvv:rabbitmq"
+	   sh "docker tag user.data:latest sofienemarmouri/projet-ynovvv:user.data"
+	   sh "docker push sofienemarmouri/projet-ynovvv:rabbitmq"
+	   sh "docker push sofienemarmouri/projet-ynovvv:user.data"
            sh "pwd;ls -la"
 		  dockerImageWeb = docker.build(registryWeb,"-f Web/Dockerfile .")
 		  dockerImageApi = docker.build(registryApplicants,"-f Services/Applicants.Api/Dockerfile .")
