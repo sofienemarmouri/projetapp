@@ -1,5 +1,3 @@
-# erreur de sql
-
 pipeline {
   environment {
 	registryWeb = "sofienemarmouri/projetynov-web"
