@@ -33,10 +33,8 @@ pipeline {
         }
       }}
     }
-    stage('Pull image') {       
-      steps {
-         docker.image("rabbitmq").pull()
-      }
+    stage("pull image"){      
+	sh "docker pull rabbitmq"
     }
     stage('Publish Image ') {
       steps{
