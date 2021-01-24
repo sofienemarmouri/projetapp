@@ -4,11 +4,13 @@ pipeline {
 	registryApplicants = "sofienemarmouri/projetynov-applicants"
 	registryJob = "sofienemarmouri/projetynov-job"
 	registryIdentity = "sofienemarmouri/projetynov-identity"
+	registrySql = "sofienemarmouri/projetynov-sql"
     registryCredential = 'dockerhub'
 	dockerImageWeb = ''
 	dockerImageApi = ''
 	dockerImageJob = ''
 	dockerImageIdentity = ''
+	dockerImageSql = ''
   }
   agent any
 
@@ -30,6 +32,12 @@ pipeline {
 		  dockerImageApi = docker.build(registryApplicants,"-f Services/Applicants.Api/Dockerfile .")
 		  dockerImageJob = docker.build(registryJob,"-f Services/Jobs.Api/Dockerfile .")
 		  dockerImageIdentity = docker.build(registryIdentity,"-f Services/Identity.Api/Dockerfile .")
+	  dir ('appscore/Database'){ 
+	  script {
+	   sh "pwd;ls -la"
+		  dockerImageSql = docker.build(registrySql,"-f Dockerfile .")
+	  }	  
+	 }	  
         }
       }}
     }
@@ -45,6 +53,8 @@ pipeline {
             dockerImageJob.push("latest")
 	    dockerImageIdentity.push("$BUILD_NUMBER")
             dockerImageIdentity.push("latest")
+	    dockerImageSql.push("$BUILD_NUMBER")
+            dockerImageSql.push("latest")
 	   sh "docker tag redis user.data"
 	   sh "docker tag rabbitmq:latest sofienemarmouri/projetynov-rabbitmq:rabbitmq"
 	   sh "docker tag user.data:latest sofienemarmouri/projetynov-userdata:user.data"
@@ -62,6 +72,7 @@ pipeline {
 	sh "docker rmi $registryApplicants:$BUILD_NUMBER"
 	sh "docker rmi $registryJob:$BUILD_NUMBER"
 	sh "docker rmi $registryIdentity:$BUILD_NUMBER"
+	sh "docker rmi $registrySql:$BUILD_NUMBER"
       }
     }
 }
