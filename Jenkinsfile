@@ -46,7 +46,7 @@ pipeline {
             dockerImageJob.push("latest")
 	    dockerImageIdentity.push("$BUILD_NUMBER")
             dockerImageIdentity.push("latest")
-	    dockerImageRedis.withRegistry('https://hub.docker.com/repository/docker/sofienemarmouri/redis') {
+	    dockerImageRedis.withRegistry('https://hub.docker.com/repository/docker/sofienemarmouri/redis', 'dockerhub') {
 		    app.push("$BUILD_NUMBER")
 		    app.push("latest")
 	    }
