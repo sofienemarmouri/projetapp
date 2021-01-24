@@ -46,10 +46,10 @@ pipeline {
 	    dockerImageIdentity.push("$BUILD_NUMBER")
             dockerImageIdentity.push("latest")
 	   sh "docker tag redis user.data"
-	   sh "docker tag rabbitmq:latest sofienemarmouri/projet-ynovvv:rabbitmq"
-	   sh "docker tag user.data:latest sofienemarmouri/projet-ynovvv:user.data"
-	   sh "docker push sofienemarmouri/projet-ynovvv:rabbitmq"
-	   sh "docker push sofienemarmouri/projet-ynovvv:user.data"
+	   sh "docker tag rabbitmq:latest sofienemarmouri/projetynov-rabbitmq:rabbitmq"
+	   sh "docker tag user.data:latest sofienemarmouri/projetynov-userdata:user.data"
+	   sh "docker push sofienemarmouri/projetynov-rabbitmq:rabbitmq"
+	   sh "docker push sofienemarmouri/projetynov-userdata:user.data"
           }
            echo "trying to push Docker Build to DockerHub"
         }
