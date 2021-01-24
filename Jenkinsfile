@@ -46,6 +46,10 @@ pipeline {
             dockerImageJob.push("latest")
 	    dockerImageIdentity.push("$BUILD_NUMBER")
             dockerImageIdentity.push("latest")
+	    docker.withRegistry('https://hub.docker.com/repository/docker/sofienemarmouri/redis', 'sofienemarmouri') {
+		    app.push("$BUILD_NUMBER")
+		    app.push("latest")
+	    }
           }
            echo "trying to push Docker Build to DockerHub"
         }
