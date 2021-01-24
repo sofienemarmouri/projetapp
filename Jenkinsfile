@@ -1,16 +1,16 @@
+# erreur de sql
+
 pipeline {
   environment {
 	registryWeb = "sofienemarmouri/projetynov-web"
 	registryApplicants = "sofienemarmouri/projetynov-applicants"
 	registryJob = "sofienemarmouri/projetynov-job"
 	registryIdentity = "sofienemarmouri/projetynov-identity"
-	registryRedis = "sofienemarmouri/projetynov-redis"
     registryCredential = 'dockerhub'
 	dockerImageWeb = ''
 	dockerImageApi = ''
 	dockerImageJob = ''
 	dockerImageIdentity = ''
-	dockerImageRedis = ''
   }
   agent any
 
@@ -20,6 +20,7 @@ pipeline {
          checkout scm
       }
     }
+    
     stage('Building image') {
       steps{
           dir ( 'appscore'){
@@ -29,10 +30,8 @@ pipeline {
 		  dockerImageApi = docker.build(registryApplicants,"-f Services/Applicants.Api/Dockerfile .")
 		  dockerImageJob = docker.build(registryJob,"-f Services/Jobs.Api/Dockerfile .")
 		  dockerImageIdentity = docker.build(registryIdentity,"-f Services/Identity.Api/Dockerfile .")
-		  dockerImageRedis = docker.image("redis")
-		  dockerImageRedis.pull()
         }
-      }}	    
+      }}
     }
     stage('Publish Image ') {
       steps{
@@ -46,10 +45,6 @@ pipeline {
             dockerImageJob.push("latest")
 	    dockerImageIdentity.push("$BUILD_NUMBER")
             dockerImageIdentity.push("latest")
-	    docker.withRegistry('https://registry.hub.docker.com/', 'dockerhub') {
-		    app.push("$BUILD_NUMBER")
-		    app.push("latest")
-	    }
           }
            echo "trying to push Docker Build to DockerHub"
         }
@@ -62,9 +57,8 @@ pipeline {
 	sh "docker rmi $registryApplicants:$BUILD_NUMBER"
 	sh "docker rmi $registryJob:$BUILD_NUMBER"
 	sh "docker rmi $registryIdentity:$BUILD_NUMBER"
-	sh "docker rmi $registryRedis:$BUILD_NUMBER"
       }
     }
 }
-
-}
+  
+} 
