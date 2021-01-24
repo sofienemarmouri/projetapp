@@ -41,8 +41,8 @@ pipeline {
             dockerImageApi.push("latest")
 	    dockerImageJob.push("$BUILD_NUMBER")
             dockerImageJob.push("latest")
-	    dockerImageJob.push("$BUILD_NUMBER")
-            dockerImageJob.push("latest")
+	    dockerImageIdentity.push("$BUILD_NUMBER")
+            dockerImageIdentity.push("latest")
           }
            echo "trying to push Docker Build to DockerHub"
         }
