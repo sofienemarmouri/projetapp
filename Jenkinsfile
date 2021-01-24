@@ -3,7 +3,7 @@ pipeline {
 	registryWeb = "sofienemarmouri/projetynov-web"
 	registryApplicants = "sofienemarmouri/projetynov-applicants"
 	registryJob = "sofienemarmouri/projetynov-job"
-	registryJob = "sofienemarmouri/projetynov-identity"
+	registryIdentity = "sofienemarmouri/projetynov-identity"
     registryCredential = 'dockerhub'
 	dockerImageWeb = ''
 	dockerImageApi = ''
