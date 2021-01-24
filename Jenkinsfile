@@ -32,6 +32,7 @@ pipeline {
 		  dockerImageApi = docker.build(registryApplicants,"-f Services/Applicants.Api/Dockerfile .")
 		  dockerImageJob = docker.build(registryJob,"-f Services/Jobs.Api/Dockerfile .")
 		  dockerImageIdentity = docker.build(registryIdentity,"-f Services/Identity.Api/Dockerfile .")
+	  }
 	  dir ('appscore/Database'){ 
 	  script {
 	   sh "pwd;ls -la"
@@ -39,7 +40,7 @@ pipeline {
 	  }	  
 	 }	  
         }
-      }}
+      }
     }
     stage('Publish Image ') {
       steps{
