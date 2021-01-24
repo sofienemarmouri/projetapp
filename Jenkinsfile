@@ -24,15 +24,14 @@ pipeline {
       steps{
           dir ( 'appscore'){
           script {
+	   sh "docker pull rabbitmq"
            sh "pwd;ls -la"
 		  dockerImageWeb = docker.build(registryWeb,"-f Web/Dockerfile .")
 		  dockerImageApi = docker.build(registryApplicants,"-f Services/Applicants.Api/Dockerfile .")
 		  dockerImageJob = docker.build(registryJob,"-f Services/Jobs.Api/Dockerfile .")
 		  dockerImageIdentity = docker.build(registryIdentity,"-f Services/Identity.Api/Dockerfile .")	
         }
-      }
-      }
-      sh "docker pull rabbitmq"	    
+      }}	    
     }
     stage('Publish Image ') {
       steps{
