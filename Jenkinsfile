@@ -24,12 +24,13 @@ pipeline {
       steps{
           dir ( 'appscore'){
           script {
-	   sh "docker pull rabbitmq"
            sh "pwd;ls -la"
 		  dockerImageWeb = docker.build(registryWeb,"-f Web/Dockerfile .")
 		  dockerImageApi = docker.build(registryApplicants,"-f Services/Applicants.Api/Dockerfile .")
 		  dockerImageJob = docker.build(registryJob,"-f Services/Jobs.Api/Dockerfile .")
-		  dockerImageIdentity = docker.build(registryIdentity,"-f Services/Identity.Api/Dockerfile .")	
+		  dockerImageIdentity = docker.build(registryIdentity,"-f Services/Identity.Api/Dockerfile .")
+		  dockerImageRabbitmq = docker.image("rabbitmq")
+		  dockerImageRabbitmq.pull()
         }
       }}	    
     }
@@ -45,8 +46,8 @@ pipeline {
             dockerImageJob.push("latest")
 	    dockerImageIdentity.push("$BUILD_NUMBER")
             dockerImageIdentity.push("latest")
-	    sh "docker tag rabbitmq:latest sofienemarmouri/projetynov-rabbitmq
-	    sh "docker push sofienemarmouri/projetynov-rabbitmq:rabbitmq
+	    dockerImageRabbitmq.push("$BUILD_NUMBER")
+            dockerImageRabbitmq.push("latest")
           }
            echo "trying to push Docker Build to DockerHub"
         }
