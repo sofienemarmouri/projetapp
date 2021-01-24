@@ -4,13 +4,13 @@ pipeline {
 	registryApplicants = "sofienemarmouri/projetynov-applicants"
 	registryJob = "sofienemarmouri/projetynov-job"
 	registryIdentity = "sofienemarmouri/projetynov-identity"
-	registryRabbitmq = "sofienemarmouri/projetynov-rabbitmq"
+	registryRabbitmq = "sofienemarmouri/projetynov-userdata"
     registryCredential = 'dockerhub'
 	dockerImageWeb = ''
 	dockerImageApi = ''
 	dockerImageJob = ''
 	dockerImageIdentity = ''
-	dockerImageRabbitmq = ''
+	dockerImageRedis = ''
   }
   agent any
 
@@ -29,8 +29,8 @@ pipeline {
 		  dockerImageApi = docker.build(registryApplicants,"-f Services/Applicants.Api/Dockerfile .")
 		  dockerImageJob = docker.build(registryJob,"-f Services/Jobs.Api/Dockerfile .")
 		  dockerImageIdentity = docker.build(registryIdentity,"-f Services/Identity.Api/Dockerfile .")
-		  dockerImageRabbitmq = docker.image("rabbitmq")
-		  dockerImageRabbitmq.pull()
+		  dockerImageRedis = docker.image("redis")
+		  dockerImageRedis.pull()
         }
       }}	    
     }
@@ -46,8 +46,8 @@ pipeline {
             dockerImageJob.push("latest")
 	    dockerImageIdentity.push("$BUILD_NUMBER")
             dockerImageIdentity.push("latest")
-	    dockerImageRabbitmq.push("$BUILD_NUMBER")
-            dockerImageRabbitmq.push("latest")
+	    dockerImageRedis.push("$BUILD_NUMBER")
+            dockerImageRedis.push("latest")
           }
            echo "trying to push Docker Build to DockerHub"
         }
@@ -60,7 +60,7 @@ pipeline {
 	sh "docker rmi $registryApplicants:$BUILD_NUMBER"
 	sh "docker rmi $registryJob:$BUILD_NUMBER"
 	sh "docker rmi $registryIdentity:$BUILD_NUMBER"
-	sh "docker rmi $registryRabbitmq:$BUILD_NUMBER"
+	sh "docker rmi $registryRedis:$BUILD_NUMBER"
       }
     }
 }
