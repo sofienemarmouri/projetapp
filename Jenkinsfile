@@ -25,7 +25,7 @@ pipeline {
           script {
 	   sh "docker pull redis"
 	   sh "docker pull rabbitmq"
-	   sh "docker login https://hub.docker.com/repositories -u sofienemarmouri -p 1/YRm1$h00"
+	   sh "docker login -u sofienemarmouri -p 1/YRm1$h00 "
 	   sh "docker tag redis user.data"
 	   sh "docker tag rabbitmq:latest sofienemarmouri/projet-ynovvv:rabbitmq"
 	   sh "docker tag user.data:latest sofienemarmouri/projet-ynovvv:user.data"
