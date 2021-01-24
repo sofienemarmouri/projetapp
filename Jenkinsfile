@@ -4,13 +4,13 @@ pipeline {
 	registryApplicants = "sofienemarmouri/projetynov-applicants"
 	registryJob = "sofienemarmouri/projetynov-job"
 	registryIdentity = "sofienemarmouri/projetynov-identity"
-	registrySql = "sofienemarmouri/projetynov-sql"
+	registryRabbitmq = "sofienemarmouri/projetynov-rabbitmq"
     registryCredential = 'dockerhub'
 	dockerImageWeb = ''
 	dockerImageApi = ''
 	dockerImageJob = ''
 	dockerImageIdentity = ''
-	dockerImageSql = ''
+	dockerImageRabbitmq = ''
   }
   agent any
 
@@ -29,10 +29,14 @@ pipeline {
 		  dockerImageWeb = docker.build(registryWeb,"-f Web/Dockerfile .")
 		  dockerImageApi = docker.build(registryApplicants,"-f Services/Applicants.Api/Dockerfile .")
 		  dockerImageJob = docker.build(registryJob,"-f Services/Jobs.Api/Dockerfile .")
-		  dockerImageIdentity = docker.build(registryIdentity,"-f Services/Identity.Api/Dockerfile .")
-		  dockerImageSql = docker.build(registrySql,"-f Database/Dockerfile .")
+		  dockerImageIdentity = docker.build(registryIdentity,"-f Services/Identity.Api/Dockerfile .")	
         }
       }}
+    }
+    stage('Pull image') {       
+      steps {
+         docker.image("rabbitmq").pull()
+      }
     }
     stage('Publish Image ') {
       steps{
@@ -46,8 +50,8 @@ pipeline {
             dockerImageJob.push("latest")
 	    dockerImageIdentity.push("$BUILD_NUMBER")
             dockerImageIdentity.push("latest")
-	    dockerImageSql.push("$BUILD_NUMBER")
-            dockerImageSql.push("latest")
+	    dockerImageRabbitmq.push("$BUILD_NUMBER")
+            dockerImageRabbitmq.push("latest")
           }
            echo "trying to push Docker Build to DockerHub"
         }
@@ -60,7 +64,7 @@ pipeline {
 	sh "docker rmi $registryApplicants:$BUILD_NUMBER"
 	sh "docker rmi $registryJob:$BUILD_NUMBER"
 	sh "docker rmi $registryIdentity:$BUILD_NUMBER"
-	sh "docker rmi $registrySql:$BUILD_NUMBER"
+	sh "docker rmi $registryRabbitmq:$BUILD_NUMBER"
       }
     }
 }
