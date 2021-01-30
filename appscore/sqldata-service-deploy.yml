@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sql-data
+  labels:
+    app: sql.data
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sql.data
+  template:
+    metadata:
+      labels:
+        app: sql.data
+    spec:
+      containers:
+      - name: sql-data
+        image: koceilaamzal/projet-ynov-lesplusde10:sql.data
+        ports:
+        - containerPort: 1433
+
+--- 
+
+apiVersion: v1
+kind: Service 
+metadata:
+  name: sql-data
+spec:
+  selector:
+    app: sql.data
+  ports:
+    - protocol: TCP
+      port: 1433 #5433
+      targetPort: 1433
+  type: ClusterIP #LoadBalancer

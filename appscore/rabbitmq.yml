@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+spec:
+  selector:
+    app: rabbitmq
+  ports:
+  - name: "ports1"
+    port: 15672
+    protocol: TCP 
+    targetPort: 15672
+  - name: "ports2"
+    port: 5672
+    protocol: TCP
+    targetPort: 5672
+  type: ClusterIP #LoadBalancer
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq
+  labels:
+    app: rabbitmq
+spec:
+  replicas: 1  ### a revoir ??
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+      - name: rabbitmq
+        image: rabbitmq
+        ports:
+        - containerPort: 15672
+        - containerPort: 5672
+#      restartPolicy: Always
+
+
+

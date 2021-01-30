@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity-api-service
+spec:
+  selector:
+    app: identity.api
+  ports:
+    - port: 8084 
+      targetPort: 80
+  type: ClusterIP #LoadBalancer
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity.api
+  labels:
+    app: identity.api
+spec:
+  replicas: 1  ### a revoir ??
+  selector:
+    matchLabels:
+      app: identity.api
+  template:
+    metadata:
+      labels:
+        app: identity.api
+    spec:
+      containers:
+      - name: identity-api  
+        image: koceilaamzal/projet-ynov-lesplusde10:identity.api4
+        env:
+        - name: RedisHost
+          value: "service-user-data.default.svc.cluster.local:6379"
+        ports:
+        - containerPort: 80
+#      restartPolicy: Always
